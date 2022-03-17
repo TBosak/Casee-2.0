@@ -1,0 +1,21 @@
+﻿<Page
+    x:Class="SnapNotes.Views.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Style="{StaticResource PageStyle}"
+    mc:Ignorable="d">
+    <Grid x:Name="ContentArea" Margin="{StaticResource MediumLeftRightMargin}">
+        <Grid
+            Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" Margin="-33,0,-24,0">
+            <DatePicker x:Name="date" Margin="353,8,0,0" VerticalAlignment="Top" Header="Date of Service"/>
+            <TimePicker x:Name="startTime" Margin="353,66,0,0" VerticalAlignment="Top" Height="57" Width="296" Header="Start Time"/>
+            <TimePicker x:Name="endTime" Margin="353,128,0,0" VerticalAlignment="Top" Height="57" Width="296" Header="End Time"/>
+            <AutoSuggestBox x:Name="consumer" HorizontalAlignment="Left" Margin="20,8,0,0" PlaceholderText="" Header="Consumer" Width="296" Height="60"/>
+            <TextBox x:Name="documentation" HorizontalAlignment="Left" Margin="20,66,0,0" PlaceholderText="" Header="Documentation" TextWrapping="Wrap" VerticalAlignment="Top" Width="296" Height="119"/>
+            <Button x:Name="submit" Content="Submit" Margin="20,202,0,0" VerticalAlignment="Top" Width="629" Click="submit_Click"/>
+            <Button x:Name="reset" Content="Reset" Margin="20,239,0,0" VerticalAlignment="Top" Width="629"/>
+        </Grid>
+    </Grid>
+</Page>
