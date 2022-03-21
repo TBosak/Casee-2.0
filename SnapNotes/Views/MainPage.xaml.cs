@@ -1,5 +1,6 @@
 ﻿using LiteDB;
 using Microsoft.Toolkit.Uwp.Notifications;
+using SnapNotes.Models;
 using System;
 using System.ComponentModel;
 using System.IO;
@@ -33,35 +34,31 @@ namespace SnapNotes.Views
 
         private void submit_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            var filePath = Path.Combine(
-            Windows.Storage.ApplicationData.Current.LocalFolder.Path,
+            var localFolder = Windows.Storage.ApplicationData.Current.LocalFolder.Path;
+            var filePath = Path.Combine(localFolder,
             "Data");
             using (var db = new LiteDatabase(filePath))
             {
-                var _shift = new shift()
+                var noteDate = this.date.SelectedDate.ToString().Split(" ")[0];
+                var _note = new CaseNote()
                 {
-                    date = this.date.SelectedDate.ToString(),
-                    start = this.startTime.Time.ToString(),
-                    end = this.endTime.Time.ToString()
+                    Consumer = this.consumer.Text,
+                    Documentation = this.documentation.Text,
+                    StartTime = DateTime.Parse(noteDate + " " + this.startTime.Time.ToString()),
+                    EndTime = DateTime.Parse(noteDate + " " + this.endTime.Time.ToString()),
                 };
 
-                var col = db.GetCollection<shift>("shifts");
-                col.Insert(_shift);
-
+                var col = db.GetCollection<CaseNote>("CaseNotes");
+                col.Insert(_note);
+                File.WriteAllText(Path.Combine(localFolder, "CaseNotes.csv"), col.FindAll().ToString());
                 // Requires Microsoft.Toolkit.Uwp.Notifications NuGet package version 7.0 or greater
                 new ToastContentBuilder()
                     .AddArgument("action", "viewConversation")
                     .AddArgument("conversationId", 9813)
                     .AddText("From database:")
-                    .AddText(col.Query().Where(x => x.date.Contains(this.date.SelectedDate.ToString())).ToList().ToString())
+                    .AddText(col.Query().Where(x => x.Consumer == _note.Consumer).ToString())
                     .Show(); // Not seeing the Show() method? Make sure you have version 7.0, and if you're using .NET 5, your TFM must be net5.0-windows10.0.17763.0 or greater
             }
-        }
-        public class shift
-        {
-            public string date { get; set; }
-            public string start { get; set; }
-            public string end { get; set; }
         }
     }
 }

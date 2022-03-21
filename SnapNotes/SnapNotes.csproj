@@ -146,6 +146,7 @@
     <Compile Include="Helpers\NavHelper.cs" />
     <Compile Include="Helpers\SettingsStorageExtensions.cs" />
     <Compile Include="Helpers\ShareOperationExtensions.cs" />
+    <Compile Include="Models\CaseNote.cs" />
     <Compile Include="Models\SharedDataModelBase.cs" />
     <Compile Include="Models\SharedDataStorageItemsModel.cs" />
     <Compile Include="Models\SharedDataWebLinkModel.cs" />
@@ -200,6 +201,10 @@
     <Page Include="Views\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ExportPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ShareTargetPage.xaml">
       <Generator>MSBuild:Compile</Generator>
