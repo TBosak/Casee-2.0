@@ -1,11 +1,13 @@
 ﻿using LiteDB;
 using Microsoft.Toolkit.Uwp.Notifications;
+using ServiceStack;
+using ServiceStack.Text;
 using SnapNotes.Models;
 using System;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
-
+using System.Text;
 using Windows.UI.Xaml.Controls;
 
 namespace SnapNotes.Views
@@ -50,7 +52,9 @@ namespace SnapNotes.Views
 
                 var col = db.GetCollection<CaseNote>("CaseNotes");
                 col.Insert(_note);
-                File.WriteAllText(Path.Combine(localFolder, "CaseNotes.csv"), col.FindAll().ToString());
+                string csv = CsvSerializer.SerializeToCsv<CaseNote>(col.FindAll());
+
+                File.WriteAllText(Path.Combine(localFolder, "CaseNotes.csv"), csv);
                 // Requires Microsoft.Toolkit.Uwp.Notifications NuGet package version 7.0 or greater
                 new ToastContentBuilder()
                     .AddArgument("action", "viewConversation")
