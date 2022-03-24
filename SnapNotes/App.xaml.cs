@@ -47,6 +47,7 @@ namespace SnapNotes
         private ActivationService CreateActivationService()
         {
             return new ActivationService(this, typeof(Views.MainPage), new Lazy<UIElement>(CreateShell));
+            return new ActivationService(this, typeof(Views.ExportPage), new Lazy<UIElement>(CreateShell));
         }
 
         private UIElement CreateShell()
