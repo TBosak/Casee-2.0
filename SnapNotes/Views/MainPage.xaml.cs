@@ -3,20 +3,27 @@ using Microsoft.Toolkit.Uwp.Notifications;
 using ServiceStack;
 using ServiceStack.Text;
 using SnapNotes.Models;
+using SnapNotes.Services;
 using System;
 using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace SnapNotes.Views
 {
     public sealed partial class MainPage : Page, INotifyPropertyChanged
     {
+        App app;
+        NoteService noteService;
+
         public MainPage()
         {
             InitializeComponent();
+            app = Application.Current as App;
+            noteService = app.noteService.Value;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -52,9 +59,8 @@ namespace SnapNotes.Views
 
                 var col = db.GetCollection<CaseNote>("CaseNotes");
                 col.Insert(_note);
-                string csv = CsvSerializer.SerializeToCsv<CaseNote>(col.FindAll());
-
-                File.WriteAllText(Path.Combine(localFolder, "CaseNotes.csv"), csv);
+                var stuff = col.FindAll();
+                
                 // Requires Microsoft.Toolkit.Uwp.Notifications NuGet package version 7.0 or greater
                 new ToastContentBuilder()
                     .AddArgument("action", "viewConversation")

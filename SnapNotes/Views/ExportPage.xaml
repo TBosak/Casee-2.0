@@ -9,7 +9,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <Button Content="Button" Margin="561,204,0,0" VerticalAlignment="Top" Click="Button_Click"/>
+        <Button Content="Export All" Margin="76,259,0,0" VerticalAlignment="Top" Click="Export_All"/>
 
     </Grid>
 </Page>

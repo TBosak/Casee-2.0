@@ -1,5 +1,7 @@
 ﻿using System;
-
+using System.IO;
+using LiteDB;
+using SnapNotes.Models;
 using SnapNotes.Services;
 
 using Windows.ApplicationModel.Activation;
@@ -7,9 +9,11 @@ using Windows.UI.Xaml;
 
 namespace SnapNotes
 {
-    public sealed partial class App : Application
+    public partial class App : Application
     {
         private Lazy<ActivationService> _activationService;
+        public Lazy<NoteService> noteService;
+        public string appPath;
 
         private ActivationService ActivationService
         {
@@ -23,6 +27,11 @@ namespace SnapNotes
 
             // Deferred execution until used. Check https://docs.microsoft.com/dotnet/api/system.lazy-1 for further info on Lazy<T> class.
             _activationService = new Lazy<ActivationService>(CreateActivationService);
+            appPath = Path.Combine(Windows.Storage.ApplicationData.Current.LocalFolder.Path,
+            "Data");
+            var database = new LiteDatabase(appPath);
+            var casenotes = database.GetCollection<CaseNote>("CaseNotes");
+            noteService = new Lazy<NoteService>(CreateNoteService(casenotes));
         }
 
         protected override async void OnLaunched(LaunchActivatedEventArgs args)
@@ -47,7 +56,11 @@ namespace SnapNotes
         private ActivationService CreateActivationService()
         {
             return new ActivationService(this, typeof(Views.MainPage), new Lazy<UIElement>(CreateShell));
-            return new ActivationService(this, typeof(Views.ExportPage), new Lazy<UIElement>(CreateShell));
+        }
+
+        private NoteService CreateNoteService(ILiteCollection<CaseNote> casenotes)
+        {
+            return new NoteService(casenotes);
         }
 
         private UIElement CreateShell()

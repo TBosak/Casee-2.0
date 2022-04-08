@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SnapNotes.Models
 {
-    class CaseNote
+    public class CaseNote
     {
         public string Consumer { get; set; }
         public string Documentation { get; set; }
