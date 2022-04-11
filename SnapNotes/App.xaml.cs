@@ -2,6 +2,7 @@
 using System.IO;
 using LiteDB;
 using SnapNotes.Models;
+using SnapNotes.Repositories;
 using SnapNotes.Services;
 
 using Windows.ApplicationModel.Activation;
@@ -39,6 +40,7 @@ namespace SnapNotes
             if (!args.PrelaunchActivated)
             {
                 await ActivationService.ActivateAsync(args);
+                Xamarin.Forms.Forms.Init(args);
             }
         }
 
@@ -60,7 +62,7 @@ namespace SnapNotes
 
         private NoteService CreateNoteService(ILiteCollection<CaseNote> casenotes)
         {
-            return new NoteService(casenotes);
+            return new NoteService(new NoteRepository(casenotes));
         }
 
         private UIElement CreateShell()

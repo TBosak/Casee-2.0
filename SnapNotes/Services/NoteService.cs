@@ -7,6 +7,7 @@ using ServiceStack.Text;
 using SnapNotes.Activation;
 using SnapNotes.Core.Helpers;
 using SnapNotes.Models;
+using SnapNotes.Repositories;
 using SnapNotes.Services;
 
 using Windows.ApplicationModel.Activation;
@@ -19,27 +20,21 @@ namespace SnapNotes.Services
     // https://github.com/Microsoft/WindowsTemplateStudio/blob/release/docs/UWP/activation.md
     public partial class NoteService
     {
-        public LiteCollection<CaseNote> _casenotes;
 
-        public NoteService(ILiteCollection<CaseNote> casenotes)
+        NoteRepository noteRepo;
+        public NoteService(NoteRepository noteRepo)
         {
-            _casenotes = casenotes as LiteCollection<CaseNote>;
+            this.noteRepo = noteRepo;
         }
 
         public string CaseNotesToCSV(IEnumerable<CaseNote> casenotes = null)
         {
-            if(casenotes == null)
-            {
-                casenotes = _casenotes.FindAll();
-            }
-
             return CsvSerializer.SerializeToCsv<CaseNote>(casenotes);
-
         }
 
-        public LiteCollection<CaseNote> CaseNotes()
+        public IEnumerable<CaseNote> CaseNotes()
         {
-            return _casenotes;
+            return noteRepo.ReturnAll();
         }
     }
 }

@@ -5,6 +5,7 @@ using SnapNotes.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using Windows.Storage;
 using Windows.Storage.Pickers;
@@ -33,7 +34,6 @@ namespace SnapNotes.Views
             this.savePicker = new FileSavePicker();
             app = Application.Current as App;
             noteService = app.noteService.Value;
-            casenotes = noteService.CaseNotes();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -62,24 +62,15 @@ namespace SnapNotes.Views
 
         private void Export_All(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            ExportNotes(casenotes.FindAll());
+            ExportNotes(noteService.CaseNotes());
         }
 
-        private void Filter_ByDateTime(int? year, int? month, int? day, int? hour, int? minute)
-        {
-            IEnumerable<CaseNote> notes;
-            if (year.HasValue) { notes = casenotes.Find(x => x.StartTime.Year == year || x.EndTime.Year == year); }
-            else { notes = casenotes.Find(x => x.StartTime.Year == year || x.EndTime.Year == year); }
-            var notes = casenotes.Find(x => x.StartTime.Month == month || x.EndTime.Month == month);
-            var notes = casenotes.Find(x => x.StartTime.Day == day || x.EndTime.Day == day);
-            var notes = casenotes.Find(x => x.StartTime.Hour == hour || x.EndTime.Hour == hour);
-            var notes = casenotes.Find(x => x.StartTime.Minute == minute || x.EndTime.Minute == minute);
-        }
+
 
         public async void ExportNotes(IEnumerable<CaseNote> notes)
         {
             setExport();
-            
+
             StorageFile file = await savePicker.PickSaveFileAsync();
             string csv = CsvSerializer.SerializeToCsv<CaseNote>(notes);
 
@@ -105,6 +96,12 @@ namespace SnapNotes.Views
             {
                 Console.WriteLine("Operation canceled.");
             }
+        }
+
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
