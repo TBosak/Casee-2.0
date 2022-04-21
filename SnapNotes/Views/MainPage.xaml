@@ -10,7 +10,7 @@
     <Grid x:Name="ContentArea" Margin="{StaticResource MediumLeftRightMargin}">
         <Grid
             Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" Margin="-33,0,-24,0">
-            <DatePicker x:Name="date" Margin="353,8,0,0" VerticalAlignment="Top" Header="Date of Service"/>
+            <DatePicker x:Name="dateOfService" Margin="353,8,0,0" VerticalAlignment="Top" Header="Date of Service"/>
             <TimePicker x:Name="startTime" Margin="353,66,0,0" VerticalAlignment="Top" Height="57" Width="296" Header="Start Time"/>
             <TimePicker x:Name="endTime" Margin="353,128,0,0" VerticalAlignment="Top" Height="57" Width="296" Header="End Time"/>
             <AutoSuggestBox x:Name="consumer" HorizontalAlignment="Left" Margin="20,8,0,0" PlaceholderText="" Header="Consumer" Width="296" Height="60"/>

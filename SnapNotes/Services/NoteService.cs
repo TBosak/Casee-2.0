@@ -32,9 +32,25 @@ namespace SnapNotes.Services
             return CsvSerializer.SerializeToCsv<CaseNote>(casenotes);
         }
 
+        public IEnumerable<CaseNote> FilterByDate(DateTimeOffset start, DateTimeOffset end)
+        {
+            return noteRepo.ReturnByDateTime(start, end);
+        }
+
+        public IEnumerable<CaseNote> FilterByOverlapping(IEnumerable<CaseNote> caseNotes = null)
+        {
+            return noteRepo.ReturnOverlapping(caseNotes ?? this.CaseNotes());
+        }
+
         public IEnumerable<CaseNote> CaseNotes()
         {
             return noteRepo.ReturnAll();
+        }
+
+        //builds a Datetime reflective of user-selected date + time
+        private DateTimeOffset CombineDateTime(DateTimeOffset dateObj, TimeSpan timeObj)
+        {
+            return dateObj - dateObj.TimeOfDay + timeObj;
         }
     }
 }

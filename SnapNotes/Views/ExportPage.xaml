@@ -16,7 +16,7 @@
         <AutoSuggestBox HorizontalAlignment="Left" Margin="33,14,0,1006" Width="382"  Header="Search" PlaceholderText="Try consumer name/initials or note content"/>
         <CalendarDatePicker Margin="33,132,0,0" VerticalAlignment="Top" x:Name="EndDate" Header="End Date"/>
         <CalendarDatePicker Margin="33,72,0,0" VerticalAlignment="Top" x:Name="StartDate" Header="Start Date"/>
-        <CheckBox Content="Only return double billing" Margin="33,192,0,0" VerticalAlignment="Top" Width="189"/>
+        <CheckBox Content="Only return double billing" x:Name="DoubleBilling" Margin="33,192,0,0" VerticalAlignment="Top" Width="189"/>
         <Button Content="Clear" Margin="269,208,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Page>

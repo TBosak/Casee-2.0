@@ -48,13 +48,13 @@ namespace SnapNotes.Views
             "Data");
             using (var db = new LiteDatabase(filePath))
             {
-                var noteDate = this.date.SelectedDate.ToString().Split(" ")[0];
+                var noteDate = this.dateOfService.Date;
                 var _note = new CaseNote()
                 {
                     Consumer = this.consumer.Text,
                     Documentation = this.documentation.Text,
-                    StartTime = DateTime.Parse(noteDate + " " + this.startTime.Time.ToString()),
-                    EndTime = DateTime.Parse(noteDate + " " + this.endTime.Time.ToString()),
+                    StartTime = noteDate.Add(this.startTime.Time),
+                    EndTime = noteDate.Add(this.endTime.Time)
                 };
 
                 var col = db.GetCollection<CaseNote>("CaseNotes");

@@ -10,7 +10,7 @@ namespace SnapNotes.Models
     {
         public string Consumer { get; set; }
         public string Documentation { get; set; }
-        public DateTime StartTime { get; set; }
-        public DateTime EndTime { get; set; }
+        public DateTimeOffset StartTime { get; set; }
+        public DateTimeOffset EndTime { get; set; }
     }
 }

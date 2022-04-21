@@ -62,6 +62,32 @@ namespace SnapNotes.Views
 
         private void Export_All(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
+            DateTimeOffset? startDate = this.StartDate.Date;
+            DateTimeOffset? endDate = this.EndDate.Date;
+            TimeSpan? startTime = this.StartTime.Time;
+            TimeSpan? endTime = this.EndTime.Time;
+            DateTimeOffset start;
+            DateTimeOffset end;
+            start = startDate.HasValue ?
+                    startDate.Value.Add(
+                        startTime.HasValue ?
+                        startTime.Value :
+                        TimeSpan.MinValue )
+                    : DateTimeOffset.MinValue.Add(
+                        startTime.HasValue ?
+                        startTime.Value :
+                        TimeSpan.MinValue);
+            end = endDate.HasValue ?
+                    endDate.Value.Add(
+                        endTime.HasValue ?
+                        endTime.Value :
+                        TimeSpan.MaxValue)
+                    : DateTimeOffset.MaxValue.Add(
+                        endTime.HasValue ?
+                        endTime.Value :
+                        TimeSpan.MaxValue);
+            noteService.FilterByDate(start, end);
+            //WIP RIGHT HERE
             ExportNotes(noteService.CaseNotes());
         }
 
@@ -72,7 +98,7 @@ namespace SnapNotes.Views
             setExport();
 
             StorageFile file = await savePicker.PickSaveFileAsync();
-            string csv = CsvSerializer.SerializeToCsv<CaseNote>(notes);
+            string csv = noteService.CaseNotesToCSV(notes);
 
             if (file != null)
             {
