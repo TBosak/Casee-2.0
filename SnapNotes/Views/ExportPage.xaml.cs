@@ -86,7 +86,8 @@ namespace SnapNotes.Views
                         endTime.HasValue ?
                         endTime.Value :
                         TimeSpan.MaxValue);
-            noteService.FilterByDate(start, end);
+            var notes = noteService.FilterByDate(start, end);
+            if (DoubleBilling.IsChecked ?? false) notes = noteService.FilterByOverlapping(notes);
             //WIP RIGHT HERE
             ExportNotes(noteService.CaseNotes());
         }
