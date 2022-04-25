@@ -40,5 +40,11 @@ namespace SnapNotes.Repositories
                            select first).ToList();
             return overlapping;
         }
+
+        public Boolean SubmitNote(CaseNote caseNote)
+        {
+            casenotes.Insert(caseNote);
+            return true;
+        }
     }
 }

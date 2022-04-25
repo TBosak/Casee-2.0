@@ -47,6 +47,11 @@ namespace SnapNotes.Services
             return noteRepo.ReturnAll();
         }
 
+        public Boolean SubmitNote(CaseNote caseNote)
+        {
+            return noteRepo.SubmitNote(caseNote);
+        }
+
         //builds a Datetime reflective of user-selected date + time
         private DateTimeOffset CombineDateTime(DateTimeOffset dateObj, TimeSpan timeObj)
         {
