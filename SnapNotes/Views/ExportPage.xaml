@@ -7,16 +7,18 @@
     xmlns:Custom="using:Microsoft.Toolkit.Uwp.UI.Controls"
     x:Class="SnapNotes.Views.ExportPage"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    mc:Ignorable="d" d:DesignWidth="652.618" d:DesignHeight="296.404">
     <Grid>
-        <Button Content="Export All" Margin="331,208,0,0" VerticalAlignment="Top" Click="Export_All" Width="84"/>
-        <TimePicker Margin="173,134,0,0" VerticalAlignment="Top" x:Name="EndTime" Header="End Time"/>
-        <TimePicker Margin="173,74,0,0" VerticalAlignment="Top" x:Name="StartTime" Header="Start Time"/>
-        <AutoSuggestBox HorizontalAlignment="Left" Margin="33,14,0,1006" Width="382"  Header="Search" PlaceholderText="Try consumer name/initials or note content"/>
-        <CalendarDatePicker Margin="33,132,0,0" VerticalAlignment="Top" x:Name="EndDate" Header="End Date"/>
-        <CalendarDatePicker Margin="33,72,0,0" VerticalAlignment="Top" x:Name="StartDate" Header="Start Date"/>
-        <CheckBox Content="Only return double billing" x:Name="DoubleBilling" Margin="33,192,0,0" VerticalAlignment="Top" Width="189"/>
-        <Button Content="Clear" Margin="269,208,0,0" VerticalAlignment="Top"/>
+        <Canvas HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Stretch">
+            <Button Content="Export All" Click="Export_All" Width="84"/>
+            <TimePicker x:Name="EndTime" Header="End Time"/>
+            <TimePicker x:Name="StartTime" Header="Start Time"/>
+            <AutoSuggestBox Width="382"  Header="Search" PlaceholderText="Try consumer name/initials or note content"/>
+            <CalendarDatePicker x:Name="EndDate" Header="End Date" Height="57" Width="295" Canvas.Left="345" Canvas.Top="119" VerticalAlignment="Top"/>
+            <CalendarDatePicker x:Name="StartDate" Header="Start Date" Height="57" Width="295" Canvas.Left="345" Canvas.Top="181" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <CheckBox Content="Only return double billing" x:Name="DoubleBilling" Width="200" Canvas.Left="42" Canvas.Top="208" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            <Button Content="Clear"/>
+        </Canvas>
     </Grid>
 </Page>

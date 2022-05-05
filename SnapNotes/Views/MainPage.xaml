@@ -7,16 +7,14 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Style="{StaticResource PageStyle}"
     mc:Ignorable="d" d:DesignWidth="652.618" d:DesignHeight="296.404">
-    <Grid x:Name="ContentArea" Margin="{StaticResource MediumLeftRightMargin}">
-        <Grid
-            Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" Margin="-33,0,-24,0">
-            <DatePicker x:Name="dateOfService" Margin="353,8,0,0" VerticalAlignment="Top" Header="Date of Service"/>
-            <TimePicker x:Name="startTime" Margin="353,66,0,0" VerticalAlignment="Top" Height="57" Width="296" Header="Start Time"/>
-            <TimePicker x:Name="endTime" Margin="353,128,0,0" VerticalAlignment="Top" Height="57" Width="296" Header="End Time"/>
-            <AutoSuggestBox x:Name="consumer" HorizontalAlignment="Left" Margin="20,8,0,0" PlaceholderText="" Header="Consumer" Width="296" Height="60"/>
-            <TextBox x:Name="documentation" HorizontalAlignment="Left" Margin="20,66,0,0" PlaceholderText="" Header="Documentation" TextWrapping="Wrap" VerticalAlignment="Top" Width="296" Height="119"/>
-            <Button x:Name="submit" Content="Submit" Margin="20,202,0,0" VerticalAlignment="Top" Width="629" Click="submit_Click"/>
-            <Button x:Name="reset" Content="Reset" Margin="20,239,0,0" VerticalAlignment="Top" Width="629"/>
-        </Grid>
-    </Grid>
+    <Canvas
+            Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}" Canvas.Left="0" Canvas.Top="0" HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Stretch">
+        <DatePicker x:Name="dateOfService" Header="Date of Service" Canvas.Left="345" Canvas.Top="8" HorizontalAlignment="Center" Width="295"/>
+        <TimePicker x:Name="startTime" Height="57" Width="295" Header="Start Time" Canvas.Left="345" Canvas.Top="66" HorizontalAlignment="Center"/>
+        <TimePicker x:Name="endTime" Height="57" Width="295" Header="End Time" Canvas.Left="345" Canvas.Top="128" HorizontalAlignment="Center"/>
+        <AutoSuggestBox x:Name="consumer" Header="Consumer" Width="310" Height="60" Canvas.Top="4" HorizontalAlignment="Left" VerticalAlignment="Center" Canvas.Left="11"/>
+        <TextBox x:Name="documentation" Header="Documentation" TextWrapping="Wrap" Width="310" Height="119" Canvas.Top="66" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="11"/>
+        <Button x:Name="submit" Content="Submit" Width="629" Click="submit_Click" Canvas.Left="11" Canvas.Top="202"/>
+        <Button x:Name="reset" Content="Reset" Width="629" Canvas.Left="11" Canvas.Top="239"/>
+    </Canvas>
 </Page>
