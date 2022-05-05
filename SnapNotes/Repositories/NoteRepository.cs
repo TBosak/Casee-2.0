@@ -29,6 +29,21 @@ namespace SnapNotes.Repositories
             return notes;
         }
 
+        public IEnumerable<CaseNote> ReturnByTimeSpan(TimeSpan startTime, TimeSpan endTime, IEnumerable<CaseNote> filtered = null)
+        {
+            IEnumerable<CaseNote> notes;
+            if(filtered == null)
+            {
+                notes = casenotes.Find(x => x.StartTime.TimeOfDay < endTime && startTime < x.EndTime.TimeOfDay);
+            }
+            else
+            {
+                notes = filtered.Where((x) =>
+                { return x.StartTime.TimeOfDay < endTime && startTime < x.EndTime.TimeOfDay; }).ToList();
+            }
+            return notes;
+        }
+
         public IEnumerable<CaseNote> ReturnOverlapping(IEnumerable<CaseNote> notes)
         {
             var overlapping = new List<CaseNote>();

@@ -72,21 +72,18 @@ namespace SnapNotes.Views
                     startDate.Value.Add(
                         startTime.HasValue ?
                         startTime.Value :
-                        TimeSpan.MinValue )
-                    : DateTimeOffset.MinValue.Add(
-                        startTime.HasValue ?
-                        startTime.Value :
-                        TimeSpan.MinValue);
+                        TimeSpan.MinValue)
+                    : DateTimeOffset.MinValue;
+
             end = endDate.HasValue ?
                     endDate.Value.Add(
                         endTime.HasValue ?
                         endTime.Value :
                         TimeSpan.MaxValue)
-                    : DateTimeOffset.MaxValue.Add(
-                        endTime.HasValue ?
-                        endTime.Value :
-                        TimeSpan.MaxValue);
+                    : DateTimeOffset.MaxValue;
+
             var notes = noteService.FilterByDate(start, end);
+
             if (DoubleBilling.IsChecked ?? false) notes = noteService.FilterByOverlapping(notes);
             //WIP RIGHT HERE
             ExportNotes(notes);

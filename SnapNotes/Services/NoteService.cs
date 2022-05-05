@@ -37,6 +37,11 @@ namespace SnapNotes.Services
             return noteRepo.ReturnByDateTime(start, end);
         }
 
+        public IEnumerable<CaseNote> FilterByTime(TimeSpan start, TimeSpan end)
+        {
+            return noteRepo.ReturnByTimeSpan(start, end);
+        }
+
         public IEnumerable<CaseNote> FilterByOverlapping(IEnumerable<CaseNote> caseNotes = null)
         {
             return noteRepo.ReturnOverlapping(caseNotes ?? this.CaseNotes());

@@ -129,6 +129,10 @@
     <value>Add Note</value>
     <comment>Navigation view item name for Main</comment>
   </data>
+	  <data name="Shell_Export.Content" xml:space="preserve">
+    <value>Export Notes</value>
+    <comment>Navigation view item name for Main</comment>
+  </data>
   <data name="ShareTarget_CompleteButton.Content" xml:space="preserve">
     <value>Complete</value>
     <comment>Complete button content text in ShareTarget page</comment>

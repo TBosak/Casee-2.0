@@ -6,19 +6,18 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:Custom="using:Microsoft.Toolkit.Uwp.UI.Controls"
     x:Class="SnapNotes.Views.ExportPage"
-    mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     mc:Ignorable="d" d:DesignWidth="652.618" d:DesignHeight="296.404">
     <Grid>
         <Canvas HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Stretch">
-            <Button Content="Export All" Click="Export_All" Width="84"/>
-            <TimePicker x:Name="EndTime" Header="End Time"/>
-            <TimePicker x:Name="StartTime" Header="Start Time"/>
-            <AutoSuggestBox Width="382"  Header="Search" PlaceholderText="Try consumer name/initials or note content"/>
-            <CalendarDatePicker x:Name="EndDate" Header="End Date" Height="57" Width="295" Canvas.Left="345" Canvas.Top="119" VerticalAlignment="Top"/>
-            <CalendarDatePicker x:Name="StartDate" Header="Start Date" Height="57" Width="295" Canvas.Left="345" Canvas.Top="181" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-            <CheckBox Content="Only return double billing" x:Name="DoubleBilling" Width="200" Canvas.Left="42" Canvas.Top="208" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-            <Button Content="Clear"/>
+            <Button Content="Export All" Click="Export_All" Width="84" Canvas.Left="559" Canvas.Top="254" VerticalAlignment="Top"/>
+            <TimePicker x:Name="EndTime" Header="End Time" Canvas.Left="10" Canvas.Top="133" Width="317" HorizontalAlignment="Center"/>
+            <TimePicker x:Name="StartTime" Header="Start Time" Canvas.Left="10" Canvas.Top="74" Width="317"/>
+            <AutoSuggestBox Width="633"  Header="Search" PlaceholderText="Try consumer name/initials or note content" HorizontalAlignment="Left" Canvas.Top="10" VerticalAlignment="Center" Canvas.Left="10"/>
+            <CalendarDatePicker x:Name="EndDate" Header="End Date" Height="57" Width="311" Canvas.Left="332" Canvas.Top="128"/>
+            <CalendarDatePicker x:Name="StartDate" Header="Start Date" Height="57" Width="311" Canvas.Left="332" Canvas.Top="70" HorizontalAlignment="Center"/>
+            <CheckBox Content="Only return double billing" x:Name="DoubleBilling" Width="200" Canvas.Left="100" Canvas.Top="254" VerticalAlignment="Top"/>
+            <Button Content="Clear" Canvas.Left="10" Canvas.Top="254" VerticalAlignment="Top" RenderTransformOrigin="0.464,0.5"/>
         </Canvas>
     </Grid>
 </Page>
