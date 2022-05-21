@@ -1,9 +1,11 @@
 ﻿using LiteDB;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Toolkit.Uwp.Notifications;
 using ServiceStack;
 using ServiceStack.Text;
 using SnapNotes.Models;
 using SnapNotes.Services;
+using SnapNotes.Services.Interfaces;
 using System;
 using System.ComponentModel;
 using System.IO;
@@ -17,13 +19,12 @@ namespace SnapNotes.Views
     public sealed partial class MainPage : Page, INotifyPropertyChanged
     {
         App app;
-        NoteService noteService;
+        Lazy<INoteService> noteService;
 
         public MainPage()
         {
             InitializeComponent();
-            app = Application.Current as App;
-            noteService = app.noteService.Value;
+            noteService = App.NoteService;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -52,7 +53,7 @@ namespace SnapNotes.Views
                     EndTime = noteDate.Add(this.endTime.Time)
                 };
 
-            if (noteService.SubmitNote(_note))
+            if (noteService.Value.SubmitNote(_note))
             {
                 new ToastContentBuilder()
                 .AddArgument("action", "viewConversation")

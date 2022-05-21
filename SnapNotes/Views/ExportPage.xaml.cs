@@ -2,6 +2,7 @@
 using ServiceStack.Text;
 using SnapNotes.Models;
 using SnapNotes.Services;
+using SnapNotes.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -26,14 +27,13 @@ namespace SnapNotes.Views
         FileSavePicker savePicker;
         App app;
         ILiteCollection<CaseNote> casenotes;
-        NoteService noteService;
+        Lazy<INoteService> noteService;
 
         public ExportPage()
         {
             this.InitializeComponent();
             this.savePicker = new FileSavePicker();
-            app = Application.Current as App;
-            noteService = app.noteService.Value;
+            noteService = App.NoteService;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -53,9 +53,10 @@ namespace SnapNotes.Views
 
         private void setExport()
         {
+            var ufid = Guid.NewGuid().ToString();
             this.savePicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
             // Dropdown of file types the user can save the file as
-            this.savePicker.FileTypeChoices.Add("Plain Text", new List<string>() { ".csv" });
+            this.savePicker.FileTypeChoices.Add(ufid, new List<string>() { ".csv" });
             // Default file name if the user does not type one in or select a file to replace
             this.savePicker.SuggestedFileName = "New Document";
         }
@@ -82,9 +83,9 @@ namespace SnapNotes.Views
                         TimeSpan.MaxValue)
                     : DateTimeOffset.MaxValue;
 
-            var notes = noteService.FilterByDate(start, end);
+            var notes = noteService.Value.FilterByDate(start, end);
 
-            if (DoubleBilling.IsChecked ?? false) notes = noteService.FilterByOverlapping(notes);
+            if (DoubleBilling.IsChecked ?? false) notes = noteService.Value.FilterByOverlapping(notes);
             //WIP RIGHT HERE
             ExportNotes(notes);
         }
@@ -96,7 +97,7 @@ namespace SnapNotes.Views
             setExport();
 
             StorageFile file = await savePicker.PickSaveFileAsync();
-            string csv = noteService.CaseNotesToCSV(notes);
+            string csv = noteService.Value.CaseNotesToCSV(notes);
 
             if (file != null)
             {

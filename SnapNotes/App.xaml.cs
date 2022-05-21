@@ -1,11 +1,15 @@
 ﻿using System;
+using System.ComponentModel;
 using System.IO;
 using LiteDB;
+using Microsoft.Extensions.DependencyInjection;
 using SnapNotes.Models;
 using SnapNotes.Repositories;
+using SnapNotes.Repositories.Interfaces;
 using SnapNotes.Services;
-
+using SnapNotes.Services.Interfaces;
 using Windows.ApplicationModel.Activation;
+using Windows.Storage.Pickers;
 using Windows.UI.Xaml;
 
 namespace SnapNotes
@@ -13,26 +17,35 @@ namespace SnapNotes
     public partial class App : Application
     {
         private Lazy<ActivationService> _activationService;
-        public Lazy<NoteService> noteService;
-        public string appPath;
+        public IServiceProvider Container { get; }
 
         private ActivationService ActivationService
         {
             get { return _activationService.Value; }
         }
 
+
         public App()
         {
             InitializeComponent();
             UnhandledException += OnAppUnhandledException;
-
+            Container = ConfigureServices();
             // Deferred execution until used. Check https://docs.microsoft.com/dotnet/api/system.lazy-1 for further info on Lazy<T> class.
             _activationService = new Lazy<ActivationService>(CreateActivationService);
-            appPath = Path.Combine(Windows.Storage.ApplicationData.Current.LocalFolder.Path,
-            "Data");
-            var database = new LiteDatabase(appPath);
-            var casenotes = database.GetCollection<CaseNote>("CaseNotes");
-            noteService = new Lazy<NoteService>(CreateNoteService(casenotes));
+        }
+
+        public static IServiceProvider Services => ((App)Application.Current).Container;
+        public static Lazy<INoteRepository> NoteRepository => Services.GetService<Lazy<INoteRepository>>();
+        public static Lazy<INoteService> NoteService => Services.GetService<Lazy<INoteService>>();
+
+        private static IServiceProvider ConfigureServices()
+        {
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddTransient(typeof(Lazy<>), typeof(LazyInstance<>));
+            serviceCollection.AddSingleton<INoteRepository, NoteRepository>();
+            serviceCollection.AddScoped<INoteService, NoteService>();
+
+            return serviceCollection.BuildServiceProvider();
         }
 
         protected override async void OnLaunched(LaunchActivatedEventArgs args)
@@ -58,11 +71,6 @@ namespace SnapNotes
         private ActivationService CreateActivationService()
         {
             return new ActivationService(this, typeof(Views.MainPage), new Lazy<UIElement>(CreateShell));
-        }
-
-        private NoteService CreateNoteService(ILiteCollection<CaseNote> casenotes)
-        {
-            return new NoteService(new NoteRepository(casenotes));
         }
 
         private UIElement CreateShell()

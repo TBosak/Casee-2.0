@@ -1,20 +1,25 @@
 ﻿using LiteDB;
 using SnapNotes.Models;
+using SnapNotes.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace SnapNotes.Repositories
 {
-    public class NoteRepository
+    public class NoteRepository : INoteRepository
     {
         ILiteCollection<CaseNote> casenotes;
 
-        public NoteRepository(ILiteCollection<CaseNote> casenotes)
+        public NoteRepository()
         {
-            this.casenotes = casenotes as LiteCollection<CaseNote>;
+            var appPath = Path.Combine(Windows.Storage.ApplicationData.Current.LocalFolder.Path,
+            "Data");
+            var database = new LiteDatabase(appPath);
+            this.casenotes = database.GetCollection<CaseNote>("CaseNotes") as LiteCollection<CaseNote>;
         }
 
         public IEnumerable<CaseNote> ReturnAll()
@@ -22,7 +27,7 @@ namespace SnapNotes.Repositories
             return casenotes.FindAll();
         }
 
-        public IEnumerable<CaseNote> ReturnByDateTime(DateTimeOffset startTime, DateTimeOffset endTime)
+        public IEnumerable<CaseNote> ReturnByDateTime(DateTimeOffset? startTime, DateTimeOffset? endTime)
         {
             IEnumerable<CaseNote> notes;
             notes = casenotes.Find(x => x.StartTime < endTime && startTime < x.EndTime);
