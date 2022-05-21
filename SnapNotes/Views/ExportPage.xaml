@@ -14,8 +14,8 @@
             <TimePicker x:Name="EndTime" Header="End Time" Canvas.Left="10" Canvas.Top="133" Width="317" HorizontalAlignment="Center"/>
             <TimePicker x:Name="StartTime" Header="Start Time" Canvas.Left="10" Canvas.Top="74" Width="317"/>
             <AutoSuggestBox Width="633"  Header="Search" PlaceholderText="Try consumer name/initials or note content" HorizontalAlignment="Left" Canvas.Top="10" VerticalAlignment="Center" Canvas.Left="10"/>
-            <CalendarDatePicker x:Name="EndDate" Header="End Date" Height="57" Width="311" Canvas.Left="332" Canvas.Top="128"/>
-            <CalendarDatePicker x:Name="StartDate" Header="Start Date" Height="57" Width="311" Canvas.Left="332" Canvas.Top="70" HorizontalAlignment="Center"/>
+            <CalendarDatePicker x:Name="EndDate" Header="End Date" Height="57" Width="311" Canvas.Left="332" Canvas.Top="133"/>
+            <CalendarDatePicker x:Name="StartDate" Header="Start Date" Height="57" Width="311" Canvas.Left="332" Canvas.Top="74" HorizontalAlignment="Center"/>
             <CheckBox Content="Only return double billing" x:Name="DoubleBilling" Width="200" Canvas.Left="100" Canvas.Top="254" VerticalAlignment="Top"/>
             <Button Content="Clear" Canvas.Left="10" Canvas.Top="254" VerticalAlignment="Top" RenderTransformOrigin="0.464,0.5"/>
         </Canvas>
