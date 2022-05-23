@@ -1,12 +1,9 @@
 ﻿using LiteDB;
-using ServiceStack.Text;
 using SnapNotes.Models;
-using SnapNotes.Services;
 using SnapNotes.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using Windows.Storage;
 using Windows.Storage.Pickers;
@@ -31,8 +28,8 @@ namespace SnapNotes.Views
 
         public ExportPage()
         {
-            this.InitializeComponent();
-            this.savePicker = new FileSavePicker();
+            InitializeComponent();
+            savePicker = new FileSavePicker();
             noteService = App.NoteService;
         }
 
@@ -54,19 +51,23 @@ namespace SnapNotes.Views
         private void setExport()
         {
             var ufid = Guid.NewGuid().ToString();
-            this.savePicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
+            savePicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
             // Dropdown of file types the user can save the file as
-            this.savePicker.FileTypeChoices.Add(ufid, new List<string>() { ".csv" });
+            savePicker.FileTypeChoices.TryAdd("Comma-separated values file", new List<string>() { ".csv" });
+            savePicker.FileTypeChoices.TryAdd("Text file", new List<string>() { ".txt" });
+            savePicker.FileTypeChoices.TryAdd("MS Excel Binary File format (Excel 03)", new List<string>() { ".xls" });
+            savePicker.FileTypeChoices.TryAdd("MS Excel XML-based file format (Excel 07)", new List<string>() { ".xlsx" });
+            savePicker.FileTypeChoices.TryAdd("MS Excel macro-enabled spreadsheet", new List<string>() { ".xlsm" });
             // Default file name if the user does not type one in or select a file to replace
-            this.savePicker.SuggestedFileName = "New Document";
+            savePicker.SuggestedFileName = $"SnapNotesExport-{DateTime.Now.ToString("ddd, dd MMM yyy HH':'mm':'ss 'CDT'")}";
         }
 
         private void Export_All(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            DateTimeOffset? startDate = this.StartDate.Date;
-            DateTimeOffset? endDate = this.EndDate.Date;
-            TimeSpan? startTime = this.StartTime.Time;
-            TimeSpan? endTime = this.EndTime.Time;
+            DateTimeOffset? startDate = StartDate.Date;
+            DateTimeOffset? endDate = EndDate.Date;
+            TimeSpan? startTime = StartTime.Time;
+            TimeSpan? endTime = EndTime.Time;
             DateTimeOffset start;
             DateTimeOffset end;
             start = startDate.HasValue ?
@@ -85,7 +86,10 @@ namespace SnapNotes.Views
 
             var notes = noteService.Value.FilterByDate(start, end);
 
-            if (DoubleBilling.IsChecked ?? false) notes = noteService.Value.FilterByOverlapping(notes);
+            if (DoubleBilling.IsChecked ?? false)
+            {
+                notes = noteService.Value.FilterByOverlapping(notes);
+            }
             //WIP RIGHT HERE
             ExportNotes(notes);
         }

@@ -1,8 +1,6 @@
-﻿using System;
+﻿using SnapNotes.Views;
+using System;
 using System.Threading.Tasks;
-
-using SnapNotes.Views;
-
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;

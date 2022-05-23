@@ -1,10 +1,8 @@
-﻿using System;
+﻿using SnapNotes.Helpers;
+using SnapNotes.Models;
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-
-using SnapNotes.Helpers;
-using SnapNotes.Models;
-
 using Windows.ApplicationModel.DataTransfer;
 using Windows.ApplicationModel.DataTransfer.ShareTarget;
 using Windows.Storage;
@@ -89,7 +87,7 @@ namespace SnapNotes.Views
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void Set<T>(ref T storage, T value, [CallerMemberName]string propertyName = null)
+        private void Set<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
         {
             if (Equals(storage, value))
             {

@@ -1,19 +1,16 @@
-﻿using System;
+﻿using SnapNotes.Helpers;
+using SnapNotes.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-
-using SnapNotes.Helpers;
-using SnapNotes.Services;
-
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
-
 using WinUI = Microsoft.UI.Xaml.Controls;
 
 namespace SnapNotes.Views
@@ -146,7 +143,7 @@ namespace SnapNotes.Views
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void Set<T>(ref T storage, T value, [CallerMemberName]string propertyName = null)
+        private void Set<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
         {
             if (Equals(storage, value))
             {

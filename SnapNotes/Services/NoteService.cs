@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using ServiceStack.Text;
+﻿using ServiceStack.Text;
 using SnapNotes.Models;
 using SnapNotes.Repositories.Interfaces;
 using SnapNotes.Services.Interfaces;
+using System;
+using System.Collections.Generic;
 
 namespace SnapNotes.Services
 {
@@ -15,7 +15,7 @@ namespace SnapNotes.Services
         Lazy<INoteRepository> noteRepository;
         public NoteService()
         {
-            this.noteRepository = App.NoteRepository;
+            noteRepository = App.NoteRepository;
         }
 
         public string CaseNotesToCSV(IEnumerable<CaseNote> casenotes = null)
@@ -35,7 +35,7 @@ namespace SnapNotes.Services
 
         public IEnumerable<CaseNote> FilterByOverlapping(IEnumerable<CaseNote> caseNotes = null)
         {
-            return noteRepository.Value.ReturnOverlapping(caseNotes ?? this.CaseNotes());
+            return noteRepository.Value.ReturnOverlapping(caseNotes ?? CaseNotes());
         }
 
         public IEnumerable<CaseNote> CaseNotes()

@@ -5,8 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SnapNotes.Repositories
 {
@@ -19,7 +17,7 @@ namespace SnapNotes.Repositories
             var appPath = Path.Combine(Windows.Storage.ApplicationData.Current.LocalFolder.Path,
             "Data");
             var database = new LiteDatabase(appPath);
-            this.casenotes = database.GetCollection<CaseNote>("CaseNotes") as LiteCollection<CaseNote>;
+            casenotes = database.GetCollection<CaseNote>("CaseNotes") as LiteCollection<CaseNote>;
         }
 
         public IEnumerable<CaseNote> ReturnAll()
@@ -37,7 +35,7 @@ namespace SnapNotes.Repositories
         public IEnumerable<CaseNote> ReturnByTimeSpan(TimeSpan startTime, TimeSpan endTime, IEnumerable<CaseNote> filtered = null)
         {
             IEnumerable<CaseNote> notes;
-            if(filtered == null)
+            if (filtered == null)
             {
                 notes = casenotes.Find(x => x.StartTime.TimeOfDay < endTime && startTime < x.EndTime.TimeOfDay);
             }

@@ -1,12 +1,9 @@
-﻿using System;
+﻿using SnapNotes.Activation;
+using SnapNotes.Core.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
-using SnapNotes.Activation;
-using SnapNotes.Core.Helpers;
-using SnapNotes.Services;
-
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;

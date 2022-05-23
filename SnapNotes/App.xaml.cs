@@ -1,15 +1,11 @@
-﻿using System;
-using System.ComponentModel;
-using System.IO;
-using LiteDB;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using SnapNotes.Models;
 using SnapNotes.Repositories;
 using SnapNotes.Repositories.Interfaces;
 using SnapNotes.Services;
 using SnapNotes.Services.Interfaces;
+using System;
 using Windows.ApplicationModel.Activation;
-using Windows.Storage.Pickers;
 using Windows.UI.Xaml;
 
 namespace SnapNotes

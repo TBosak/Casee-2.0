@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 using SnapNotes.Models;
 
 using Windows.ApplicationModel.DataTransfer;

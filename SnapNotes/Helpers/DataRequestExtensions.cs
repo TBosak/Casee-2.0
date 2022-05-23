@@ -1,10 +1,8 @@
-﻿using System;
+﻿using SnapNotes.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
-using SnapNotes.Models;
-
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage;
 using Windows.Storage.Streams;
