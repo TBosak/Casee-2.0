@@ -38,6 +38,15 @@ namespace SnapNotes.Services
             return noteRepository.Value.ReturnOverlapping(caseNotes ?? CaseNotes());
         }
 
+
+        public IEnumerable<CaseNote> Query(string query, bool byDocs = true, bool byClient = true)
+        {
+            var notes = new List<CaseNote>();
+            if (byDocs) { notes.AddRange(noteRepository.Value.QueryByDocumentation(query, null)); }
+            if (byClient) { notes.AddRange(noteRepository.Value.QueryByConsumer(query, null)); }
+            return notes;
+        }
+
         public IEnumerable<CaseNote> CaseNotes()
         {
             return noteRepository.Value.ReturnAll();
@@ -47,5 +56,6 @@ namespace SnapNotes.Services
         {
             return noteRepository.Value.SubmitNote(caseNote);
         }
+
     }
 }
