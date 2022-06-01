@@ -1,8 +1,6 @@
-﻿using System;
+﻿using SnapNotes.Activation;
+using System;
 using System.Threading.Tasks;
-
-using SnapNotes.Activation;
-
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Notifications;
 

@@ -1,15 +1,9 @@
-﻿using LiteDB;
-using Microsoft.Toolkit.Uwp.Notifications;
-using ServiceStack;
-using ServiceStack.Text;
+﻿using Microsoft.Toolkit.Uwp.Notifications;
 using SnapNotes.Models;
-using SnapNotes.Services;
+using SnapNotes.Services.Interfaces;
 using System;
 using System.ComponentModel;
-using System.IO;
 using System.Runtime.CompilerServices;
-using System.Text;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace SnapNotes.Views
@@ -17,18 +11,17 @@ namespace SnapNotes.Views
     public sealed partial class MainPage : Page, INotifyPropertyChanged
     {
         App app;
-        NoteService noteService;
+        Lazy<INoteService> noteService;
 
         public MainPage()
         {
             InitializeComponent();
-            app = Application.Current as App;
-            noteService = app.noteService.Value;
+            noteService = App.NoteService;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void Set<T>(ref T storage, T value, [CallerMemberName]string propertyName = null)
+        private void Set<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
         {
             if (Equals(storage, value))
             {
@@ -43,16 +36,16 @@ namespace SnapNotes.Views
 
         private void submit_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-                var noteDate = this.dateOfService.Date;
-                var _note = new CaseNote()
-                {
-                    Consumer = this.consumer.Text,
-                    Documentation = this.documentation.Text,
-                    StartTime = noteDate.Add(this.startTime.Time),
-                    EndTime = noteDate.Add(this.endTime.Time)
-                };
+            var noteDate = dateOfService.Date;
+            var _note = new CaseNote()
+            {
+                Consumer = consumer.Text,
+                Documentation = documentation.Text,
+                StartTime = noteDate.Add(startTime.Time),
+                EndTime = noteDate.Add(endTime.Time)
+            };
 
-            if (noteService.SubmitNote(_note))
+            if (noteService.Value.SubmitNote(_note))
             {
                 new ToastContentBuilder()
                 .AddArgument("action", "viewConversation")
@@ -61,7 +54,7 @@ namespace SnapNotes.Views
                 .AddText(_note.ToString())
                 .Show();
             }
-                
+
         }
     }
 }

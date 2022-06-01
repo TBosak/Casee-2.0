@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-using SnapNotes.Helpers;
-
 using Windows.Storage;
 
 namespace SnapNotes.Models

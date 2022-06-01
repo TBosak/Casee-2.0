@@ -1,8 +1,6 @@
-﻿using System;
+﻿using SnapNotes.Helpers;
+using System;
 using System.Threading.Tasks;
-
-using SnapNotes.Helpers;
-
 using Windows.ApplicationModel.Core;
 using Windows.Storage;
 using Windows.UI.Core;

@@ -1,7 +1,5 @@
 ﻿using System;
 
-using SnapNotes.Helpers;
-
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 

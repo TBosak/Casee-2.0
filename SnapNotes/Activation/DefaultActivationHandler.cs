@@ -1,9 +1,7 @@
-﻿using System;
-using System.Threading.Tasks;
-
-using SnapNotes.Core.Helpers;
+﻿using SnapNotes.Core.Helpers;
 using SnapNotes.Services;
-
+using System;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 
 namespace SnapNotes.Activation

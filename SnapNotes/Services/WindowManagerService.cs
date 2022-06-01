@@ -69,8 +69,10 @@ namespace SnapNotes.Services
                 viewControl = ViewLifetimeControl.CreateForCurrentView();
                 viewControl.Title = windowTitle;
                 viewControl.StartViewInUse();
-                var frame = new Frame();
-                frame.RequestedTheme = ThemeSelectorService.Theme;
+                var frame = new Frame
+                {
+                    RequestedTheme = ThemeSelectorService.Theme
+                };
                 frame.Navigate(pageType, viewControl);
                 Window.Current.Content = frame;
                 Window.Current.Activate();
