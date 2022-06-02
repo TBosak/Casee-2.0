@@ -130,8 +130,12 @@
     <comment>Navigation view item name for Main</comment>
   </data>
 	  <data name="Shell_Export.Content" xml:space="preserve">
-    <value>Export Notes</value>
-    <comment>Navigation view item name for Main</comment>
+    <value>Search Notes</value>
+    <comment>Navigation view item name for Search</comment>
+  </data>
+	<data name="Shell_Edit.Content" xml:space="preserve">
+    <value>Edit Notes</value>
+    <comment>Navigation view item name for Edit</comment>
   </data>
   <data name="ShareTarget_CompleteButton.Content" xml:space="preserve">
     <value>Complete</value>

@@ -1,10 +1,18 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using LiteDB;
+using LiteDB.Engine;
+using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.DependencyInjection;
 using SnapNotes.Models;
 using SnapNotes.Repositories;
 using SnapNotes.Repositories.Interfaces;
 using SnapNotes.Services;
 using SnapNotes.Services.Interfaces;
 using System;
+using System.IO;
+using System.Security.AccessControl;
+using System.Security.Principal;
+using System.Threading;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 
@@ -33,6 +41,8 @@ namespace SnapNotes
         public static IServiceProvider Services => ((App)Application.Current).Container;
         public static Lazy<INoteRepository> NoteRepository => Services.GetService<Lazy<INoteRepository>>();
         public static Lazy<INoteService> NoteService => Services.GetService<Lazy<INoteService>>();
+        public static Lazy<IMemoryCache> Cache => Services.GetService<Lazy<IMemoryCache>>();
+        public static string DataPath => Path.Combine(Windows.Storage.ApplicationData.Current.LocalFolder.Path, "Data");
 
         private static IServiceProvider ConfigureServices()
         {
@@ -40,6 +50,7 @@ namespace SnapNotes
             serviceCollection.AddTransient(typeof(Lazy<>), typeof(LazyInstance<>));
             serviceCollection.AddSingleton<INoteRepository, NoteRepository>();
             serviceCollection.AddScoped<INoteService, NoteService>();
+            serviceCollection.AddMemoryCache();
 
             return serviceCollection.BuildServiceProvider();
         }
@@ -73,6 +84,7 @@ namespace SnapNotes
         {
             return new Views.ShellPage();
         }
+
 
         protected override async void OnShareTargetActivated(ShareTargetActivatedEventArgs args)
         {

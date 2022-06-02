@@ -1,9 +1,11 @@
-﻿using ServiceStack.Text;
+﻿using Microsoft.Extensions.Caching.Memory;
+using ServiceStack.Text;
 using SnapNotes.Models;
 using SnapNotes.Repositories.Interfaces;
 using SnapNotes.Services.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SnapNotes.Services
 {
@@ -13,9 +15,12 @@ namespace SnapNotes.Services
     {
 
         Lazy<INoteRepository> noteRepository;
+        Lazy<IMemoryCache> cache;
+
         public NoteService()
         {
             noteRepository = App.NoteRepository;
+            cache = App.Cache;
         }
 
         public string CaseNotesToCSV(IEnumerable<CaseNote> casenotes = null)
@@ -25,7 +30,12 @@ namespace SnapNotes.Services
 
         public IEnumerable<CaseNote> FilterByDate(DateTimeOffset start, DateTimeOffset end)
         {
-            return noteRepository.Value.ReturnByDateTime(start, end);
+            var results = noteRepository.Value.ReturnByDateTime(start, end);
+            ///TESTING CACHE
+            var cachedResults = results.ToList();
+            cachedResults.RemoveAt(0);
+            cache.Value.Set("AllNotes", cachedResults);
+            return cache.Value.Get("AllNotes") as IEnumerable<CaseNote>;
         }
 
         public IEnumerable<CaseNote> FilterByTime(TimeSpan start, TimeSpan end)

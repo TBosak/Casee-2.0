@@ -10,7 +10,8 @@
     mc:Ignorable="d" d:DesignWidth="652.618" d:DesignHeight="296.404">
     <Grid>
         <Canvas HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Stretch">
-            <Button Content="Export All" Click="Export_All" Width="84" Canvas.Left="559" Canvas.Top="254" VerticalAlignment="Top"/>
+            <Button Content="Edit" Click="Edit" Width="84" Canvas.Left="559" Canvas.Top="254" VerticalAlignment="Top"/>
+            <Button Content="Export All" Click="Export_All" Width="84" Canvas.Left="467" Canvas.Top="254"/>
             <TimePicker x:Name="EndTime" Header="End Time" Canvas.Left="10" Canvas.Top="133" Width="317" HorizontalAlignment="Center"/>
             <TimePicker x:Name="StartTime" Header="Start Time" Canvas.Left="10" Canvas.Top="74" Width="317"/>
             <AutoSuggestBox Width="633"  Header="Search" PlaceholderText="Try consumer name/initials or note content" HorizontalAlignment="Left" Canvas.Top="10" VerticalAlignment="Center" Canvas.Left="10"/>

@@ -12,26 +12,26 @@ namespace SnapNotes.Repositories
 {
     public class NoteRepository : INoteRepository
     {
-        ILiteCollection<CaseNote> casenotes;
+        public static ILiteCollection<CaseNote> CaseNotes;
+        public static ILiteDatabase Database;
 
         public NoteRepository()
         {
-            var appPath = Path.Combine(Windows.Storage.ApplicationData.Current.LocalFolder.Path,
-            "Data");
-            var database = new LiteDatabase(appPath);
-            casenotes = database.GetCollection<CaseNote>("CaseNotes") as LiteCollection<CaseNote>;
+            Database = new LiteDatabase(App.DataPath);
+            CaseNotes = Database.GetCollection<CaseNote>("CaseNotes");
         }
 
         public IEnumerable<CaseNote> ReturnAll()
         {
-            return casenotes.FindAll();
+            return CaseNotes.FindAll();
         }
 
         public IEnumerable<CaseNote> ReturnByDateTime(DateTimeOffset? startTime, DateTimeOffset? endTime)
         {
             IEnumerable<CaseNote> notes;
-            notes = casenotes.Find(x => x.StartTime < endTime && startTime < x.EndTime);
-            return notes;
+
+                notes = CaseNotes.Find(x => x.StartTime < endTime && startTime < x.EndTime);
+                return notes;
         }
 
         public IEnumerable<CaseNote> ReturnByTimeSpan(TimeSpan startTime, TimeSpan endTime, IEnumerable<CaseNote>? filtered)
@@ -39,7 +39,7 @@ namespace SnapNotes.Repositories
             IEnumerable<CaseNote> notes;
             if (filtered == null)
             {
-                notes = casenotes.Find(x => x.StartTime.TimeOfDay < endTime && startTime < x.EndTime.TimeOfDay);
+                  notes = CaseNotes.Find(x => x.StartTime.TimeOfDay < endTime && startTime < x.EndTime.TimeOfDay);
             }
             else
             {
@@ -54,7 +54,7 @@ namespace SnapNotes.Repositories
             Regex rgx = new Regex(query);
             if (filtered == null)
             {
-                return casenotes.Query().Where(x =>
+                return CaseNotes.Query().Where(x =>
                 x.Consumer.ToLower().Contains(query.ToLower())
                 || query.ToLower().Contains(x.Consumer.ToLower())
                 || rgx.IsMatch(x.Consumer))
@@ -76,7 +76,7 @@ namespace SnapNotes.Repositories
             Regex rgx = new Regex(query);
             if (filtered == null)
             {
-                return casenotes.Query().Where(x =>
+                return CaseNotes.Query().Where(x =>
                 x.Documentation.ToLower().Contains(query.ToLower())
                 || query.ToLower().Contains(x.Documentation.ToLower())
                 || rgx.IsMatch(x.Documentation))
@@ -107,7 +107,7 @@ namespace SnapNotes.Repositories
 
         public Boolean SubmitNote(CaseNote caseNote)
         {
-            casenotes.Insert(caseNote);
+            CaseNotes.Insert(caseNote);
             return true;
         }
     }

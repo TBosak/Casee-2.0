@@ -15,7 +15,7 @@
     <winui:NavigationView
         x:Name="navigationView"
         IsBackButtonVisible="Visible"
-        IsBackEnabled="{x:Bind IsBackEnabled, Mode=OneWay}"
+        IsBackEnabled="True"
         SelectedItem="{x:Bind Selected, Mode=OneWay}"
         ItemInvoked="OnItemInvoked"
         PaneDisplayMode="Top"
@@ -29,13 +29,8 @@
             Edit String/en-US/Resources.resw: Add a menu item title for each page
             -->
             <winui:NavigationViewItem x:Uid="Shell_Main" Icon="Document" helpers:NavHelper.NavigateTo="views:MainPage" />
-            <winui:NavigationViewItem x:Uid="Shell_Export" Icon="Document" helpers:NavHelper.NavigateTo="views:ExportPage" />
+            <winui:NavigationViewItem x:Uid="Shell_Export" Icon="Find" helpers:NavHelper.NavigateTo="views:ExportPage" />
         </winui:NavigationView.MenuItems>
-        <i:Interaction.Behaviors>
-            <behaviors:NavigationViewHeaderBehavior
-                DefaultHeader="{x:Bind Selected.Content, Mode=OneWay}">
-            </behaviors:NavigationViewHeaderBehavior>
-        </i:Interaction.Behaviors>
         <Grid>
             <Frame x:Name="shellFrame" />
         </Grid>

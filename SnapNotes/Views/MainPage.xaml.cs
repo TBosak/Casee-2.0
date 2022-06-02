@@ -43,6 +43,7 @@ namespace SnapNotes.Views
                 Documentation = documentation.Text,
                 StartTime = noteDate.Add(startTime.Time),
                 EndTime = noteDate.Add(endTime.Time)
+                //NEED TO FIX DATETIME CREATION HERE - FOLLOW GUIDE: https://docs.microsoft.com/en-us/windows/apps/design/controls/date-and-time
             };
 
             if (noteService.Value.SubmitNote(_note))

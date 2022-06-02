@@ -1,4 +1,5 @@
 ﻿using LiteDB;
+using Microsoft.Extensions.Caching.Memory;
 using SnapNotes.Models;
 using SnapNotes.Services.Interfaces;
 using System;
@@ -22,15 +23,15 @@ namespace SnapNotes.Views
     public sealed partial class ExportPage : Page, INotifyPropertyChanged
     {
         FileSavePicker savePicker;
-        App app;
-        ILiteCollection<CaseNote> casenotes;
         Lazy<INoteService> noteService;
+        Lazy<IMemoryCache> cache;
 
         public ExportPage()
         {
             InitializeComponent();
             savePicker = new FileSavePicker();
             noteService = App.NoteService;
+            cache = App.Cache;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -62,6 +63,11 @@ namespace SnapNotes.Views
             savePicker.SuggestedFileName = $"SnapNotesExport-{DateTime.Now.ToString("ddd, dd MMM yyy HH':'mm':'ss 'CDT'")}";
         }
 
+        private void Edit(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(EditPage));
+        }
+
         private void Export_All(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             DateTimeOffset? startDate = StartDate.Date;
@@ -91,10 +97,9 @@ namespace SnapNotes.Views
                 notes = noteService.Value.FilterByOverlapping(notes);
             }
             //WIP RIGHT HERE
+            cache.Value.Set<IEnumerable<CaseNote>>("Notes", notes);
             ExportNotes(notes);
         }
-
-
 
         public async void ExportNotes(IEnumerable<CaseNote> notes)
         {
