@@ -30,12 +30,9 @@ namespace Casee.Services
 
         public IEnumerable<CaseNote> FilterByDate(DateTimeOffset start, DateTimeOffset end)
         {
-            var results = noteRepository.Value.ReturnByDateTime(start, end);
-            ///TESTING CACHE
-            var cachedResults = results.ToList();
-            cachedResults.RemoveAt(0);
-            cache.Value.Set("AllNotes", cachedResults);
-            return cache.Value.Get("AllNotes") as IEnumerable<CaseNote>;
+            var results = noteRepository.Value.ReturnByDateTime(start, end).ToList();
+            cache.Value.Set("AllNotes", results);
+            return results;
         }
 
         public IEnumerable<CaseNote> FilterByTime(TimeSpan start, TimeSpan end)
