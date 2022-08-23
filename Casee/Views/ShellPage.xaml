@@ -30,6 +30,7 @@
             -->
             <winui:NavigationViewItem x:Uid="Shell_Main" Icon="Document" helpers:NavHelper.NavigateTo="views:MainPage" />
             <winui:NavigationViewItem x:Uid="Shell_Export" Icon="Find" helpers:NavHelper.NavigateTo="views:ExportPage" />
+            <winui:NavigationViewItem x:Uid="Shell_Edit" Icon="Edit" helpers:NavHelper.NavigateTo="views:EditPage" />
         </winui:NavigationView.MenuItems>
         <Grid>
             <Frame x:Name="shellFrame" />

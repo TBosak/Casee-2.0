@@ -11,6 +11,7 @@ using Windows.Storage.Pickers;
 using Windows.Storage.Provider;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using System.Collections.ObjectModel;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -97,7 +98,7 @@ namespace Casee.Views
                 notes = noteService.Value.FilterByOverlapping(notes);
             }
             //WIP RIGHT HERE
-            cache.Value.Set<IEnumerable<CaseNote>>("Notes", notes);
+            cache.Value.Set<ObservableCollection<CaseNote>>("Notes", new ObservableCollection<CaseNote>(notes));
             ExportNotes(notes);
         }
 

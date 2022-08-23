@@ -2,6 +2,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Casee.Views"
+    xmlns:models="using:Casee.Models"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:Custom="using:Microsoft.Toolkit.Uwp.UI.Controls"
@@ -10,9 +11,22 @@
     mc:Ignorable="d" d:DesignWidth="652.618" d:DesignHeight="296.404">
     <Grid>
         <Canvas HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Stretch">
-            <ScrollViewer Height="150" Width="653">
-                <ListBox ItemsSource="{x:Bind caseNotes.Values}"/>
-            </ScrollViewer>
+            <ListView x:Name="listView" ItemsSource="{x:Bind caseNotes, Mode=TwoWay}"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="models:CaseNote">
+                        <Custom:WrapPanel>
+                            <TextBox Header="|  Consumer  |" Text="{x:Bind Consumer}"/>
+                            <TextBox MinWidth="500" Header="|  Documentation  |" Text="{x:Bind Documentation}"/>
+                            <DatePicker Header="|  Date  |" Date="{x:Bind StartTime}"/>
+                            <TimePicker Header="|  Start Time  |" Time="{x:Bind StartTime}"/>
+                            <TimePicker Header="|  End Time  |" Time="{x:Bind EndTime}"/>
+                            <!-- DATES & TIMES WAY OFF HERE - FIGURE THIS PIECE OUT -->
+                        </Custom:WrapPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </Canvas>
     </Grid>
 </Page>

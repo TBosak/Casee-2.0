@@ -12,6 +12,7 @@ using Windows.Storage.Pickers;
 using Windows.Storage.Provider;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using System.Collections.ObjectModel;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -25,18 +26,13 @@ namespace Casee.Views
     {
         Lazy<INoteService> noteService;
         Lazy<IMemoryCache> cache;
-        Dictionary<int,string> caseNotes;
+        public ObservableCollection<CaseNote> caseNotes { get; set; }
         public EditPage()
         {
             InitializeComponent();
             noteService = App.NoteService;
             cache = App.Cache;
-            caseNotes = new Dictionary<int, string>();
-            var rawNotes = cache.Value.Get("Notes") as IEnumerable<CaseNote>;
-            foreach ( var note in rawNotes.Select((value, i) => new { i, value }))
-            {
-                caseNotes.Add(note.i, note.value.ToString());
-            }
+            caseNotes = cache.Value.Get("Notes") as ObservableCollection<CaseNote>;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
